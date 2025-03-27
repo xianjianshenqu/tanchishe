@@ -13,7 +13,8 @@ public class GamePanel extends JPanel implements ActionListener {
     private static final int HEIGHT = 300;
     private static final int UNIT_SIZE = 10;
     private static final int GAME_UNITS = (WIDTH * HEIGHT) / (UNIT_SIZE * UNIT_SIZE);
-    private static final int DELAY = 150;
+    private static final int DEFAULT_DELAY = 150; // 默认延迟时间
+    private int delay; // 控制蛇移动速度的延迟时间
     private final List<Point> snake = new ArrayList<>();
     private Point food;
     private char direction = 'R';
@@ -27,6 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
         setBackground(Color.black);
         setFocusable(true);
         addKeyListener(new MyKeyAdapter());
+        delay = DEFAULT_DELAY; // 初始化延迟时间为默认值
         startGame();
     }
 
@@ -35,7 +37,7 @@ public class GamePanel extends JPanel implements ActionListener {
         snake.add(new Point(WIDTH / 2, HEIGHT / 2));
         generateFood();
         running = true;
-        timer = new Timer(DELAY, this);
+        timer = new Timer(delay, this); // 使用delay变量来设置定时器
         timer.start();
     }
 
