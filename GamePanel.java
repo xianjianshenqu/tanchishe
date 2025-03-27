@@ -153,4 +153,40 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+        // 这里需要根据你的游戏循环实现调整速度
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+        // 根据难度调整游戏参数
+    }
+
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+        // 调整游戏区域大小
+        setPreferredSize(new Dimension(width, height));
+        revalidate();
+    }
+
+    public void setSoundEnabled(boolean enabled) {
+        this.soundEnabled = enabled;
+    }
+
+    public void playEatSound() {
+        if (soundEnabled) {
+            eatSound.setFramePosition(0);
+            eatSound.start();
+        }
+    }
+
+    public void playGameOverSound() {
+        if (soundEnabled) {
+            gameOverSound.setFramePosition(0);
+            gameOverSound.start();
+        }
+    }
 }
