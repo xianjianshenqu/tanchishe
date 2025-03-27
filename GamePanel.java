@@ -154,9 +154,11 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    // 添加setSpeed方法
     public void setSpeed(int speed) {
         this.speed = speed;
-        // 这里需要根据你的游戏循环实现调整速度
+        // 这里可以添加更新游戏速度的逻辑
+        // 例如，如果你使用Timer来控制游戏循环，可以在这里重启Timer
     }
 
     public void setDifficulty(int difficulty) {

@@ -7,13 +7,8 @@ public class Main {
     private static int speed = 150; // 默认速度
     private static int width = 800; // 默认宽度
     private static int height = 600; // 默认高度
-    private static Clip eatSound;
-    private static Clip gameOverSound;
-
+    
     public static void main(String[] args) {
-        // 加载声音
-        loadSounds();
-        
         // 创建主窗口
         JFrame frame = new JFrame("贪吃蛇游戏");
         
@@ -68,14 +63,12 @@ public class Main {
         settingsMenu.add(sizeMenu);
         menuBar.add(settingsMenu);
         
-        // 声音设置
-        JCheckBoxMenuItem soundItem = new JCheckBoxMenuItem("开启声音", true);
-        menuBar.add(soundItem);
-        
         frame.setJMenuBar(menuBar);
         
         // 创建游戏面板
-        GamePanel gamePanel = new GamePanel(speed, width, height);
+        GamePanel gamePanel = new GamePanel();
+        gamePanel.setSpeed(speed);
+        gamePanel.setSize(width, height);
         frame.add(gamePanel);
         
         // 设置窗口属性
@@ -85,30 +78,14 @@ public class Main {
         frame.setVisible(true);
         
         // 添加菜单事件监听器
-        addMenuListeners(easy, medium, hard, slow, normal, fast, small, mediumSize, large, soundItem, gamePanel, frame);
+        addMenuListeners(easy, medium, hard, slow, normal, fast, small, mediumSize, large, gamePanel, frame);
     }
     
-    private static void loadSounds() {
-        try {
-            // 这里需要替换为你的声音文件路径
-            AudioInputStream eatAudio = AudioSystem.getAudioInputStream(
-                Main.class.getResourceAsStream("/sounds/eat.wav"));
-            eatSound = AudioSystem.getClip();
-            eatSound.open(eatAudio);
-            
-            AudioInputStream gameOverAudio = AudioSystem.getAudioInputStream(
-                Main.class.getResourceAsStream("/sounds/gameover.wav"));
-            gameOverSound = AudioSystem.getClip();
-            gameOverSound.open(gameOverAudio);
-        } catch (Exception e) {
-            System.err.println("加载声音文件失败: " + e.getMessage());
-        }
-    }
-    
+    // 修改监听器方法签名，移除soundItem参数
     private static void addMenuListeners(JRadioButtonMenuItem easy, JRadioButtonMenuItem medium, JRadioButtonMenuItem hard,
                                        JRadioButtonMenuItem slow, JRadioButtonMenuItem normal, JRadioButtonMenuItem fast,
                                        JRadioButtonMenuItem small, JRadioButtonMenuItem mediumSize, JRadioButtonMenuItem large,
-                                       JCheckBoxMenuItem soundItem, GamePanel gamePanel, JFrame frame) {
+                                       GamePanel gamePanel, JFrame frame) {
         // 难度设置监听
         easy.addActionListener(e -> gamePanel.setDifficulty(1));
         medium.addActionListener(e -> gamePanel.setDifficulty(2));
@@ -152,5 +129,7 @@ public class Main {
         soundItem.addActionListener(e -> {
             gamePanel.setSoundEnabled(soundItem.isSelected());
         });
+        
+        // 移除声音设置监听相关代码
     }
 }
